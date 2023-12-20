@@ -1,0 +1,46 @@
+aside {
+  border: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 12px;
+  height: 100%;
+  background-color: #efefef;
+}
+
+aside div {
+  height: 30px;
+  padding: 4px;
+  border: 1px solid #1a192b;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  font-size: 14px;
+}
+
+.input_node {
+  border: none;
+  background: #68abfe;
+  color: #fff;
+}
+
+.default_node {
+  border: none;
+  background-color: #6ede87;
+  color: #fff;
+}
+
+.output_node {
+  border: none;
+  background-color: #ff0072;
+  color: #fff;
+}
+
+.custom_node {
+  background-color: blueviolet;
+  color: #fff;
+  border: 1px solid blueviolet;
+}
+
+

@@ -1,0 +1,18 @@
+.text-updater-node {
+  /* height: 50px; */
+  /* width: 200px; */
+  min-width: 150px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background: blueviolet;
+  color: #fff;
+  text-align: center;
+}
+
+.text-updater-node label {
+  display: block;
+  color: #fff;  /* input 텍스트 색상 */
+  font-size: 12px;
+}

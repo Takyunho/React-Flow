@@ -1,11 +1,12 @@
 import './App.css';
-import Flow from './components/Flow';
+// import Flow from './components/Flow';
+import DragAndDropNode from './components/example/DragAndDropNode';
 
 export default function App() {
   return (
     <div>
-      <p>react flow ex</p>
-      <Flow></Flow>
+      <DragAndDropNode></DragAndDropNode>
+      {/* <Flow></Flow> */}
     </div>
   );
 }
