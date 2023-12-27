@@ -19,28 +19,23 @@ aside div {
   font-size: 14px;
 }
 
-.input_node {
+.camera_node {
   border: none;
   background: #68abfe;
   color: #fff;
 }
 
-.default_node {
+.algorithm_node {
   border: none;
   background-color: #6ede87;
   color: #fff;
 }
 
-.output_node {
-  border: none;
+.custom_node {
   background-color: #ff0072;
   color: #fff;
-}
-
-.custom_node {
-  background-color: blueviolet;
-  color: #fff;
-  border: 1px solid blueviolet;
+  border: none;
+  /* border: 1px solid blueviolet; */
 }
 
 

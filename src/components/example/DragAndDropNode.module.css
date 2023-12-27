@@ -43,3 +43,12 @@
   background-color: rgba(36, 38, 45, 0.713);
 }
 
+
+/* DragAndDropNode에서의 custom node style 정의 */
+
+.customNode_container {
+  width: 120px;
+  height: 150px;
+  text-align: center;
+  padding: 10px;
+}

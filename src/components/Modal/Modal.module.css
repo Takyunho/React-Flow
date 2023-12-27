@@ -10,8 +10,84 @@
 
 .white_background {
   background: white;
-  width: 70%;
+  width: 60%;
   margin: 100px auto;
   padding: 20px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.white_background .cameraSelect_wrap {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  width: 100%;
+}
+
+.cameraSelect_wrap p {
+  margin: 0 0 3px;
+  /* text-align: left; */
+}
+
+.cameraSelect_wrap select {
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #eee;
+  text-align: center;
+  cursor: pointer;
+}
+
+.white_background .video_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.video_wrap select {
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #eee;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+/* 버튼 */
+.white_background .btn_wrap {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  
+}
+
+.btn_wrap button {
+  width: 70px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: cornflowerblue;
+  color: #fff;
+  border: 1px solid #eee;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.white_background button:hover {
+  background-color: rgb(56, 102, 188);
+  color: white;
+}
+
+.white_background .close_btn {
+  margin-left: 20px;
+  margin-right: 5px;
 }
