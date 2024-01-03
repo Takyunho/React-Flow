@@ -1,9 +1,10 @@
 aside {
-  border: 1px solid #eee;
+  border: none;
   padding: 15px 10px;
   font-size: 12px;
   height: 100%;
-  background-color: #efefef;
+  /* background-color: #efefef; */
+  background-color: #e2eafc;
 }
 
 aside div {
@@ -21,20 +22,29 @@ aside div {
 
 .camera_node {
   border: none;
+  /* background: #abc4ff; */
   background: #68abfe;
   color: #fff;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .algorithm_node {
   border: none;
+  /* background-color: #b6ccfe; */
   background-color: #6ede87;
   color: #fff;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .custom_node {
+  /* background-color: #c1d3fe; */
   background-color: #ff0072;
   color: #fff;
   border: none;
+  font-size: 18px;
+  font-weight: bold;
   /* border: 1px solid blueviolet; */
 }
 

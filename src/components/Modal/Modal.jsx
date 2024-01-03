@@ -2,69 +2,25 @@ import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Modal.module.css";
 import CameraView from "./ModalContent/CameraView.jsx";
 import AlgorithmView from "./ModalContent/AlgorithmView.jsx";
+import { click } from "@testing-library/user-event/dist/click.js";
 
-const cameraList = [
-  {
-    id: "0",
-    name: "camera02_1-1",
-  },
-  {
-    id: "1",
-    name: "camera02_1-2",
-  },
-  {
-    id: "2",
-    name: "camera02_1-3",
-  },
-];
 
-const videoList = [
-  {
-    id: "0",
-    src: "video01 주소",
-  },
-  {
-    id: "1",
-    src: "video02 주소",
-  },
-  {
-    id: "2",
-    src: "video03 주소",
-  },
-];
-
-const algorithmList = [
-  {
-    id: "0",
-    name: "알고리즘01",
-  },
-  {
-    id: "1",
-    name: "알고리즘02",
-  },
-  {
-    id: "2",
-    name: "알고리즘03",
-  },
-]
 
 export default function Modal({
-  modalToggle,
   closeModal,
   handleUpdate,
   currentType,
   clickedNode,
+  camera,
+  cameraSelected,
+  setCameraSelected,
+  video,
+  videoSelected,
+  setVideoSelected,
+  algorithm,
+  algorithmSelected,
+  setAlgorithmSelected,
 }) {
-  // 카메라
-  const [camera, setCamera] = useState(cameraList);
-  const [cameraSelected, setCameraSelected] = useState(camera[0].name); // camera select
-  const [video, setVideo] = useState(videoList);
-  const [videoSelected, setVideoSelected] = useState(video[0].src); // camera select
-
-  // 알고리즘
-  const [algorithm, setAlgorithm] = useState(algorithmList);
-  const [algorithmSelected, setAlgorithmSelected] = useState(algorithm[0].name); // algorithm select
-
   // useEffect(() => {
   //   console.log(currentType);
   //   console.log(cameraSelected);
@@ -76,11 +32,19 @@ export default function Modal({
   //   };
   // }, [cameraSelected, videoSelected]);
 
-  // 카메라 및 비디오 선택
-  const handleChangeCamera = (event) => setCameraSelected(event.target.value);
-  const handleChangeVideo = (event) => setVideoSelected(event.target.value);
-  const handleChangeAlgorithm = (event) =>
-    setAlgorithmSelected(event.target.value);
+  const handleChangeCamera = (event) => {
+    console.log(event); // react select에서 event값은 target을 지정해줄 필요가 없다.
+    setCameraSelected(event);
+  };
+  const handleChangeVideo = (event) => {
+    console.log(event);
+    setVideoSelected(event);
+  };
+  const handleChangeAlgorithm = (event) => {
+    console.log(event);
+    setAlgorithmSelected(event);
+  };
+
 
   const setNodeAndEdge = (e) => {
     console.log("저장");
@@ -94,6 +58,15 @@ export default function Modal({
 
     switch (currentType) {
       case "camera":
+        if (cameraSelected === undefined) {
+          alert("카메라를 선택해주세요");
+          return;
+        }
+        if (videoSelected === undefined) {
+          alert("비디오를 선택해주세요");
+          return;
+        }
+
         const newCameraNode = {
           id: clickedNode.id,
           camera: cameraSelected,
@@ -103,6 +76,11 @@ export default function Modal({
         handleUpdate(newCameraNode);
         break;
       case "algorithm":
+        if (algorithmSelected === undefined) {
+          alert("적어도 하나 이상의 알고리즘을 선택해주세요");
+          return;
+        }
+
         const newAlgorithmNode = {
           id: clickedNode.id,
           algorithm: algorithmSelected,
@@ -114,7 +92,6 @@ export default function Modal({
         console.log("default");
         break;
     }
-    
   };
 
   const onChange = useCallback((evt) => {
@@ -126,17 +103,21 @@ export default function Modal({
     return (
       <div className={styles.black_background}>
         <div className={styles.white_background}>
-          <CameraView
-            styles={styles}
-            camera={camera}
-            handleChangeCamera={handleChangeCamera}
-            cameraSelected={cameraSelected}
-            video={video}
-            handleChangeVideo={handleChangeVideo}
-            videoSelected={videoSelected}
-            closeModal={closeModal}
-            setNodeAndEdge={setNodeAndEdge}
-          ></CameraView>
+          {clickedNode.id && (
+            <CameraView
+              styles={styles}
+              camera={camera}
+              handleChangeCamera={handleChangeCamera}
+              cameraSelected={cameraSelected}
+              setCameraSelected={setCameraSelected}
+              video={video}
+              handleChangeVideo={handleChangeVideo}
+              videoSelected={videoSelected}
+              closeModal={closeModal}
+              setNodeAndEdge={setNodeAndEdge}
+              clickedNode={clickedNode}
+            ></CameraView>
+          )}
         </div>
       </div>
     );
@@ -147,8 +128,9 @@ export default function Modal({
           <AlgorithmView
             styles={styles}
             algorithm={algorithm}
-            handleChangeAlgorithm={handleChangeAlgorithm}
             algorithmSelected={algorithmSelected}
+            clickedNode={clickedNode}
+            handleChangeAlgorithm={handleChangeAlgorithm}
             closeModal={closeModal}
             setNodeAndEdge={setNodeAndEdge}
           ></AlgorithmView>

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 // import styles from "../Modal.module.css";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 export default function AlgorithmView({
   styles,
@@ -8,26 +10,30 @@ export default function AlgorithmView({
   algorithmSelected,
   closeModal,
   setNodeAndEdge,
+  clickedNode,
 }) {
-  useEffect(() => {
-    console.log(algorithm);
-    console.log(algorithmSelected);
-  }, [algorithm, algorithmSelected]);
+
+  console.log(algorithm)
+  console.log(algorithmSelected)
+
+  const filterAlgorithm = () => {
+    if (clickedNode.data.algorithm === null) {
+      return algorithmSelected;
+    } else {
+      return clickedNode.data.algorithm;
+    }
+  };
 
   return (
     <>
-      <div className={styles.cameraSelect_wrap}>
+      <div className={styles.select_wrap}>
         <p>알고리즘 선택</p>
-        <select onChange={handleChangeAlgorithm} value={algorithmSelected}>
-          {algorithm.map((item) => {
-            console.log(item);
-            return (
-              <option key={item.id} value={item.name}>
-                {item.name}
-              </option>
-            );
-          })}
-        </select>
+        <Select
+          options={algorithm}
+          onChange={handleChangeAlgorithm}
+          isMulti
+          value={filterAlgorithm}
+        />
       </div>
 
       <div className={styles.btn_wrap}>
@@ -44,4 +50,18 @@ export default function AlgorithmView({
       </div>
     </>
   );
+}
+
+// 기존 select
+{
+  /* <select onChange={handleChangeAlgorithm} value={algorithmSelected}>
+        {algorithm.map((item) => {
+          console.log(item);
+          return (
+            <option key={item.id} value={item.name}>
+              {item.name}
+            </option>
+          );
+        })}
+      </select> */
 }

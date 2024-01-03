@@ -15,3 +15,40 @@
   color: #fff;  /* input 텍스트 색상 */
   font-size: 12px;
 }
+
+.content {
+  display: flex;
+  align-items: center;
+  width: auto;
+  /* height: 100%; */
+  font-size: 14px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ddd;
+}
+.last-content {
+  border: none;
+}
+
+.content p {
+  font-weight: bold;
+}
+
+.content-wrap {
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.camera_icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.icon-text {
+  font-size: 14px;
+  text-align: center;
+}

@@ -7,11 +7,23 @@ export default function AlgorithmNode({ id, data }) {
   console.log(data);
 
   return (
-    <div className="camera-custom-node">
+    <div className="algorithm-custom-node">
       <Handle type="target" position={Position.Top} />
       <div>
         <p>
-          알고리즘 : <span>{data.algorithm}</span>
+          선택된 알고리즘 :
+          <span>
+            {data.algorithm && data.algorithm.map((algorithm) => {
+                  return algorithm.label + ", ";
+                })}
+          </span>
+          {/* <span>
+            {data.algorithm === ""
+              ? data.algorithm
+              : data.algorithm.map((algorithm) => {
+                  return algorithm.label + ", ";
+                })}
+          </span> */}
         </p>
       </div>
       <Handle

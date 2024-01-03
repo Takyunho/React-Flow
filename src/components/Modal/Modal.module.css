@@ -20,54 +20,41 @@
   justify-content: center;
 }
 
-.white_background .cameraSelect_wrap {
+/* modal안의 select style */
+.select_wrap {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
   justify-content: center;
   width: 100%;
-}
-
-.cameraSelect_wrap p {
-  margin: 0 0 3px;
-  /* text-align: left; */
-}
-
-.cameraSelect_wrap select {
-  width: 200px;
-  height: 50px;
   font-size: 20px;
-  border-radius: 10px;
-  background-color: #eee;
-  text-align: center;
-  cursor: pointer;
 }
 
-.white_background .video_wrap {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  justify-content: center;
+.icon {
+  font-size: 24px;
+  margin-bottom: 2px;
+  margin-right: 5px;
 }
 
-.video_wrap select {
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border-radius: 10px;
-  background-color: #eee;
-  text-align: center;
-  cursor: pointer;
+.flex_center {
+   display: flex;
+   align-items: center;
+   height: 40px;
+   margin-top: 20px;
+   margin-bottom: 0;
 }
+
+
+
+
 
 
 /* 버튼 */
 .white_background .btn_wrap {
   width: 100%;
+  margin-top: 40px;
   display: flex;
   justify-content: end;
-  
 }
 
 .btn_wrap button {

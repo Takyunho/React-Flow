@@ -19,7 +19,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-import { initialNodes, initialEdges, nodeInfo } from "./init-data"; //@ init 데이터
+import { initialNodes, initialEdges, nodeInfo, cameraList, videoList, algorithmList } from "./init-data"; //@ init 데이터
 import styles from "./DragAndDropNode.module.css"; //@ 스타일
 import Sidebar from "../SideBar/SideBar"; //@ 사이드 바
 import Modal from "../Modal/Modal"; //@ 모달창
@@ -27,31 +27,12 @@ import CameraNode from "../CustomNode/CameraNode"; //@ 카메라 노드(커스�
 import AlgorithmNode from "../CustomNode/AlgorithmNode"; //@ 알고리즘 노드(커스텀)
 
 //# 커스텀 노드를 여기서도 만들 수 있다!
-//# 첫번째 인자는 노드의 정보를 담고있는 객체
-// const CustomNode = (data) => {
-//   console.log(data)
-
-//   return (
-//     <div className={styles.customNode_container}>
-//       <Handle type="target" position={Position.Left}></Handle>
-//         <div>
-//           {settingValue.map((item) => {
-//             return (
-//               <div>
-//                 <p>{item.camera}</p>
-//                 <p>{item.video}</p>
-//               </div>
-//             );
-//           })}
-//         </div>
-//       <Handle type="source" position={Position.Right}></Handle>
-//     </div>
-//   );
-// };
 
 //@ 새로운 노드를 만들 때 id에 getId 값을 지정
 let id = 0;
 const getId = () => `${id++}`;
+let data_id = 0;
+const dataId = () => `${data_id++}`;
 
 export default function DragAndDropNode() {
   const reactFlowWrapper = useRef(null);
@@ -61,11 +42,21 @@ export default function DragAndDropNode() {
   const [modalToggle, setModalToggle] = useState(false);
   const [currentType, setCurrentType] = useState(""); // 현재 선택된 노드의 타입
 
-  const [variant, setVariant] = useState("cross"); // Background variant를 보관 및 설정하는 역할 (초기값은 cross)
+  const [variant, setVariant] = useState("dots"); // Background variant를 보관 및 설정하는 역할 (초기값은 cross)
   const [nodeInformation, setNodeInfomation] = useState(nodeInfo); // 사이드바에서 노드들의 이름과 타입을 설정하기위한 상태
 
   // 클릭한 노드의 정보만을 담고 있는 객체
   const [clickedNode, setClickedNode] = useState(null);
+
+  // 카메라
+  const [camera, setCamera] = useState(cameraList);
+  const [cameraSelected, setCameraSelected] = useState(undefined); // camera select
+  const [video, setVideo] = useState(videoList);
+  const [videoSelected, setVideoSelected] = useState(undefined); // camera select
+
+  // 알고리즘
+  const [algorithm, setAlgorithm] = useState(algorithmList);
+  const [algorithmSelected, setAlgorithmSelected] = useState(undefined); // algorithm select
 
   //@ 커스텀 노드 등록
   const nodeTypes = useMemo(
@@ -85,12 +76,16 @@ export default function DragAndDropNode() {
   const nodeColor = (type) => {
     switch (type) {
       case "camera":
+        // return "#abc4ff";
         return "#68abfe";
       case "algorithm":
+        // return "#b6ccfe";
         return "#6ede87";
       case "custom":
-        return "#ff0072";    
+        // return "#c1d3fe";
+        return "#ff0072";
       default:
+        // return "#d7e3fc";
         return "#6865A5";
     }
   };
@@ -102,7 +97,19 @@ export default function DragAndDropNode() {
 
     setClickedNode(node); // 선택한 노드의 정보만을 담고 있는 객체 설정
     setModalToggle(true); // modal 열기
-    setCurrentType(node.type);  // 모달창 오픈시 현재 선택된 노드의 타입 담기
+    setCurrentType(node.type); // 모달창 오픈시 현재 선택된 노드의 타입 담기
+
+    // 모달창 오픈시 데이터가 없으면 생성으로 간주해서 cameraSelected 초기화하기
+    if (node.data.camera === null) {
+      setCameraSelected(undefined);
+    } 
+    if (node.data.video === null) {
+      setVideoSelected(undefined);
+    }
+    if (node.data.algorithm === null) {
+      setAlgorithmSelected(undefined);
+    }
+
   }, []);
 
   // * 모달창 닫기
@@ -111,7 +118,6 @@ export default function DragAndDropNode() {
     setClickedNode(null); // 초기화
     setModalToggle(false);
   }, []);
-
 
   //* 화면 로드시 백단에서 노드 + 엣지 정보 받아오기
   useEffect(() => {
@@ -158,7 +164,7 @@ export default function DragAndDropNode() {
             id: getId(),
             type,
             position,
-            data: { label: `${type}`, camera: "", video: "" },
+            data: { id: dataId(), camera: null, video: null },
             style: {
               backgroundColor: `${nodeColor(type)}`,
               color: "white",
@@ -167,13 +173,13 @@ export default function DragAndDropNode() {
           };
           setNodes((nds) => nds.concat(newCameraNode));
           return;
-        
+
         case "algorithm":
           const newAlgorithmNode = {
             id: getId(),
             type,
             position,
-            data: { label: `${type}`, algorithm: "" },
+            data: { id: dataId(), algorithm: null },
             style: {
               backgroundColor: `${nodeColor(type)}`,
               color: "white",
@@ -182,7 +188,7 @@ export default function DragAndDropNode() {
           };
           setNodes((nds) => nds.concat(newAlgorithmNode));
           return;
-        
+
         case "custom":
           break;
         default:
@@ -195,8 +201,8 @@ export default function DragAndDropNode() {
 
   // * 노드 업데이트하기 (모달창에서 설정 한 후에)
   const handleUpdate = (newNode) => {
-    console.log(nodes); // 기존 노드
-    console.log(newNode); // 새로받아온 노드
+    console.log("기존 노드 ", nodes); // 기존 노드
+    console.log("새로 받아온 노드 ", newNode); // 새로받아온 노드
 
     switch (currentType) {
       case "camera":
@@ -214,7 +220,7 @@ export default function DragAndDropNode() {
           })
         );
         break;
-      
+
       case "algorithm":
         setNodes(
           nodes.map((node) => {
@@ -229,11 +235,12 @@ export default function DragAndDropNode() {
           })
         );
         break;
-      
+
       default:
         console.log("default");
         break;
     }
+    console.log(nodes);
     closeModal();
   };
 
@@ -242,11 +249,19 @@ export default function DragAndDropNode() {
     <div className={styles.flow}>
       {modalToggle && (
         <Modal
-          modalToggle={modalToggle}
           closeModal={closeModal}
           currentType={currentType}
           handleUpdate={handleUpdate}
           clickedNode={clickedNode}
+          camera={camera}
+          cameraSelected={cameraSelected}
+          setCameraSelected={setCameraSelected}
+          video={video}
+          videoSelected={videoSelected}
+          setVideoSelected={setVideoSelected}
+          algorithm={algorithm}
+          algorithmSelected={algorithmSelected}
+          setAlgorithmSelected={setAlgorithmSelected}
         ></Modal>
       )}
 
@@ -269,6 +284,7 @@ export default function DragAndDropNode() {
             nodeTypes={nodeTypes} // 사용자 정의 노드를 사용
             onNodeDoubleClick={openModal} // 더블 클릭시 모달창 띄우기
             // fitView
+            style={{ backgroundColor: "#edf2fb" }}
           >
             <Panel>
               <button
